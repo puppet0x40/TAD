@@ -11,7 +11,7 @@ using namespace std;
 /// prototipos
 bool isCheio( int listra[]);
 bool isVazia(int lista[]);
-int quantiadeOcupado(int lista[]);
+int quantidadeOcupado(int lista[]);
 void mostrar(int lista[]);
 void inserir(int indice, int elementos, int listra[]);
 int procurar(int elementos, int lista[]);
@@ -85,7 +85,7 @@ bool isVazia(int lista[]){ //ok
    return true;
 }
 
-int quantiadeOcupado(int lista[]){ //ok
+int quantidadeOcupado(int lista[]){ //ok
    int contador = 0;
    for(int i=0; i<20; i++){
       if(lista[i] != 0){
