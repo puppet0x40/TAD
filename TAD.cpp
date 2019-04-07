@@ -28,11 +28,11 @@ int lista[20];
 int main(){
    int opcao;
    setlocale(LC_ALL,"portuguese");
-   lista[5] = 99;
+   /** test de procura */ lista[5] = 99;
    while(true){
       do{
          cls;
-         cout << "\t\tTAD\t\t elementos: "<< quantiadeOcupado(lista) <<"/20\n" <<
+         cout << "\t\tTAD\t\t elementos: "<< quantidadeOcupado(lista) <<"/20\n" <<
                  "\t1. Mostrar lista\n" <<
                  "\t2. *Inserir elemento*\n" <<
                  "\t3. *Remover elemento*\n" <<
