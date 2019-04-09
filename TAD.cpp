@@ -14,9 +14,8 @@ bool isCheio(int listra[]);
 bool isVazia(int lista[]);
 int quantidadeOcupado(int lista[]);
 void mostrar(int lista[]);
-void inserirInicio(int elemento,int lista[]);
-void inserir(int indice, int elemento, int listra[]);
 int procurar(int elemento, int lista[]);
+void inserir(int indice, int elemento, int listra[]);
 void excluir(int elemento, int lista[]);
 
 void pesquisar(int lista[]);
@@ -107,14 +106,9 @@ int quantidadeOcupado(int lista[]){ //ok
    return contador;
 }
 
-void inserirInicio(int elemento,int lista[]){
-
-
-}
-
 void mostrar(int lista[]){ //ok
    cls;
-   cout << "\tPosição\tElementos\n\n";
+   cout << "\tPosição\tElementos \n\n";
    for(int i=0; i<TAMANHO; i++){
       cout << "\t" << i+1 << "º\t" << lista[i] << endl;
 	}
@@ -127,33 +121,37 @@ int procurar(int elemento, int lista[]){ //ok
          return i;
       }
    }
-   return 0;
+   return -1;
 }
 
-void inserir(int indice, int elemento, int listra[]){
+
+void inserir(int indice, int elemento, int listra[]){ //
    if(isCheio(lista)){
       cout << "lista cheia!";
       pausa;
+   }else{
+      while(indice<TAMANHO){
+
+      }
    }
-   lista[indice] = elemento;
 
 }
 
-void excluir(int elemento, int lista[]){
+void excluir(int elemento, int lista[]){ //
 
 }
 
 
 
 /// Funcões Secundárias
-void pesquisar(int lista[]){
+void pesquisar(int lista[]){ //ok
    int elemento;
    cls;
    cout << "\n\n\tValor:";
    cin >> elemento;
-   if (procurar(elemento,lista)){
+   if (procurar(elemento,lista) != -1){
       cout << "\tvalor " << elemento << " encontrado !\n";
-      cout << "\tPosicão: " << procurar(elemento,lista)+1;
+      cout << "\tPosicão: " << procurar(elemento,lista)+1 << "º";
    }else{
       cout << "valor " << elemento << " não emcontrado!";
    }
@@ -176,10 +174,10 @@ void adicionar(int lista[]){
             cin >> opcao;
       switch(opcao){
       case 1:
-            inserirInicio(elemento,lista);
+            inserir(0,elemento,lista);
          break;
       case 2:
-
+            //inserir()
          break;
       case 3:
 
@@ -192,6 +190,7 @@ void adicionar(int lista[]){
       }while(opcao < 1 || opcao > 3);
 
 }
+
 /********* TAD *************
 *@quantidadeDePontos = 2.0
 *@dataDeEntrega = 25/04/19
