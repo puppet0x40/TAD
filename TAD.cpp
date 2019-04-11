@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <clocale>
+///
 #define cls system("cls");  //limpa tela
 #define pausa getchar();getchar() //#define pausa system("pause");
 const int TAMANHO = 20; // fixa o tamnho do vetor e da condicional do for
