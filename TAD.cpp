@@ -7,10 +7,13 @@
 const int TAMANHO = 20; // fixa o tamnho do vetor e da condicional do for
 using namespace std;
 
+int test = 0;
+
 /// prototipos
 bool isCheio(int listra[]);
 bool isVazia(int lista[]);
 int quantidadeOcupado(int lista[]);
+int MoveProximo(int indiceAntecessor,int lista[]);
 void mostrar(int lista[]);
 int procurar(int elemento, int lista[]);
 void inserir(int indice, int elemento, int listra[]);
@@ -34,7 +37,7 @@ int main(){
    lista[5] = 987;
    lista[8] = 65400;
    lista[19] = 321;
-   lista[1] = 123;
+   lista[0] = 123;
    lista[13] = 0;
    lista[15] = 9999;
    /** zona de teste ** zona de teste ** zona de teste ***/
@@ -102,6 +105,24 @@ int quantidadeOcupado(int lista[]){ //ok otimizado
    return contador;
 }
 
+int moveProximo(int indiceAntecessor,int lista[]){
+   int indiceSucessor = indiceAntecessor+1;
+   int elementoAntecessor;
+   if(lista[indiceSucessor] == 0){
+      cout << "sucesso = zero  sucesso pega valor antecesor  : indece A: " << indiceAntecessor <<" S: "<< indiceSucessor << endl;
+      cout << "sucesso = zero  sucesso pega valor antecesor  : valor A: " << lista[indiceAntecessor] <<" S: "<< lista[indiceSucessor] << endl;
+      lista[indiceSucessor] = lista[indiceAntecessor];
+      cout << "atualizado: indece A: " << indiceAntecessor << " S: " << indiceSucessor << endl;
+      cout << "atualizado: valor A: " << lista[indiceAntecessor] << " S: " << lista[indiceSucessor] << endl;
+      cout << test++;
+      pausa;
+   }else
+      moveProximo(indiceSucessor,lista);
+      lista[indiceAntecessor] = 0;
+}
+
+
+
 void mostrar(int lista[]){ //ok
    cls;
    cout << "\tPosição\tElementos \n\n";
@@ -131,25 +152,11 @@ void inserir(int indice, int elemento, int lista[]){ //
          if(lista[0] == 0){                           /// verifica se primeiro indice está vazio
             lista[0] = elemento;                      /// se estive coloque o valor no inicio
          }else{                                       /// se nao tive
-
-            for(int i = 0; i<TAMANHO; i++){           /// faça um varredura e
-               if(lista[i+1] == 0){                   /// vificique se proximo está vazio
-                  antigoValor = lista[i];            /// se estive vazio proximo pega o primeiro valor
-                  lista[i] = elemento;                /// na pociçao do primeiro coloque novo valor
-                  lista[i+1] = antigoValor;          /// coloque o antigo valor do primeiro
-                  break;
-               }/*else{
-                  aux = lista[i+1];
-                  lista[i+1] = lista[i];
-                  lista[i] = aux;
-
-               }*/
-
-            }
+            moveProximo(0,lista);
+            lista[0] = elemento;
          }
-      }else if(indice == TAMANHO-1){
-         //
       }
+
    }
 
 }
