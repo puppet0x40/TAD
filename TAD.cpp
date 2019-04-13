@@ -14,6 +14,7 @@ int test = 0;
 bool isCheio(int listra[]);                           /// verifica se a lista está cheia
 bool isVazia(int lista[]);                            /// verifica se a lista está vazia
 int quantidadeOcupado(int lista[]);                   /// verifica a quantidades de elementos que estao ocupados
+void troca(int &a,int &b);
 int pularElementosParaDireita(int lista[]);           /// pula os todos elementos um casa para direita  se proximo elemento for zero
 void mostrar(int lista[]);                            /// mostra toda elementos lista!
 int procurar(int elemento, int lista[]);              /// funcao: procura um elemento específico na lista
@@ -37,14 +38,14 @@ int main(){
    int opcao;
    setlocale(LC_ALL,"portuguese");
    system("color 2"); // setar cor de o texto e fundo
-   /** zona de teste ** zona de teste ** zona de teste ***
+   /** zona de teste ** zona de teste ** zona de teste ****/
    //for(int i=0; i<TAMANHO; i++){lista[i] = 1;}
-   lista[5] = 987;
-   lista[8] = 65400;
-   lista[19] = 321;
-   lista[0] = 123;
-   lista[13] = 0;
-   lista[15] = 9999;
+   lista[5] = 1;
+   lista[8] = 2;
+   lista[19] = 3;
+   lista[0] = 4;
+   lista[13] = 5;
+   lista[15] = 6;
    /** zona de teste ** zona de teste ** zona de teste ***/
    do{
       cls;
@@ -59,6 +60,7 @@ int main(){
       cin >> opcao;
       switch(opcao){
       case 0:
+         Equipe();
          exit(true);                                  /// fecha o programa
       case 1:
          mostrar(lista);                              ///
@@ -114,19 +116,30 @@ int quantidadeOcupado(int lista[]){ //ok otimizado
    return contador;
 }
 
+
+
+void troca(int &a, int &b){
+   int aux = a;                         /// se for verdade elemento i troca elemento
+   a = b;
+   b = aux;
+}
+
 int pularElementosParaDireita(int lista[]){ //ok
-   int aux;
-   for(int i=0; i<5; i++){
-   		if(lista[0] != 0){
-      		if(lista[i] == 0){
-               aux = lista[i-1];
-               lista[i-1] = lista[i];
-               lista[i] = aux;
-               i=0;
-            }
-         }else{
-            break;
+   //int aux;
+   for(int i=0; i<TAMANHO; i++){                      /// varredura para 0 a TAMANHO-1
+      if(lista[0] == 0){                              /// verifica se se primeiro igual a 0
+         break;                                       /// se for verdade para o for
+      }else{                                          /// se nao entao
+         if(lista[i] == 0){                           /// verifica lista[i] igual a zero
+            /*aux = lista[i-1];                         /// se for verdade elemento i troca elemento
+            lista[i-1] = lista[i];
+            lista[i] = aux;*/
+
+            troca(lista[i],lista[i-1]);
+
+            i=0;
          }
+      }
 	}
 }
 
@@ -136,7 +149,7 @@ void mostrar(int lista[]){ //ok
    cls;
    cout << "\tPosição\tElementos \n\n";
    for(int i=0; i<TAMANHO; i++){
-      cout << "\t" << i+1 << "º\t" << lista[i] << endl;
+      cout << "\t" << i+1 << "º\t" <<  lista[i] << endl;
 	}
 	pausa;
 }
@@ -160,7 +173,8 @@ void inserir(int indice, int elemento, int lista[]){ //
       if(indice == 0){                                /// se o indice for zero é para coloca o elemento no inicio lista
          if(lista[0] == 0){                           /// verifica se lista[0] da lista está vazio
             lista[0] = elemento;                      /// entao lista[0] = elemento
-         }else{                                       /// se nao
+         }
+         else{                                       /// se nao
             pularElementosParaDireita(lista);         /// pula todo elemento um casa a direita
             lista[0] = elemento;                      /// coloque lista[0] = elemento
          }
