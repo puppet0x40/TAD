@@ -3,28 +3,29 @@
 #include <cstdio>
 #include <clocale>
 ///
-#define cls system("cls");  //limpa tela
-#define pausa getchar();getchar() //#define pausa system("pause");
-const int TAMANHO = 20; // fixa o tamnho do vetor e da condicional do for
+#define cls system("cls");          /// limpa (cmd) Prompt de Comando
+#define pausa getchar();getchar()   /// pausa Prompt de Comando
+const int TAMANHO = 20;             /// fixar o TAMANHO do vetor e da condicional do for
 using namespace std;
 
 int test = 0;
 
 /// prototipos
-bool isCheio(int listra[]);
-bool isVazia(int lista[]);
-int quantidadeOcupado(int lista[]);
-int pularElementosParaDireita(int lista[]);
-void mostrar(int lista[]);
-int procurar(int elemento, int lista[]);
-void pesquisar(int lista[]);
+bool isCheio(int listra[]);                           /// verifica se a lista está cheia
+bool isVazia(int lista[]);                            /// verifica se a lista está vazia
+int quantidadeOcupado(int lista[]);                   /// verifica a quantidades de elementos que estao ocupados
+int pularElementosParaDireita(int lista[]);           /// pula os todos elementos um casa para direita  se proximo elemento for zero
+void mostrar(int lista[]);                            /// mostra toda elementos lista!
+int procurar(int elemento, int lista[]);              /// funcao: procura um elemento específico na lista
+void pesquisar(int lista[]);                          /// interface: procura um elemento específico na lista que usuario digitou
 
 /// prototipos em desenvolvimento
-void inserir(int indice, int elemento, int listra[]);
-void excluir(int elemento, int lista[]);
+void inserir(int indice, int elemento, int listra[]); /// funcao: inserir elemento específico na lista
+void excluir(int elemento, int lista[]);              ///
+void adicionar(int lista[]);                          /// interface: inserir elemento específico na lista que usuario digitou
 
-
-void adicionar(int lista[]);
+///besteira
+void Equipe();
 
 
 /// Variavel Global
@@ -36,7 +37,7 @@ int main(){
    int opcao;
    setlocale(LC_ALL,"portuguese");
    system("color 2"); // setar cor de o texto e fundo
-   /** zona de teste ** zona de teste ** zona de teste ***/
+   /** zona de teste ** zona de teste ** zona de teste ***
    //for(int i=0; i<TAMANHO; i++){lista[i] = 1;}
    lista[5] = 987;
    lista[8] = 65400;
@@ -52,26 +53,30 @@ int main(){
               "\t2. Inserir elemento\n" <<
               "\t3. *Remover elemento*\n" <<
               "\t4. procura elemento\n" <<
+              "\t5. Sobre\n" <<
               "\t0. sair\n" <<
               "\tOpcao: ";
       cin >> opcao;
       switch(opcao){
       case 0:
-         exit(true);
+         exit(true);                                  /// fecha o programa
       case 1:
-         mostrar(lista);
+         mostrar(lista);                              ///
          break;
       case 2:
-         adicionar(lista);
+         adicionar(lista);                            ///
          break;
       case 3:
-         //excluir();
+         //excluir();                                 ///
          break;
       case 4:
-         pesquisar(lista);
+         pesquisar(lista);                            ///
+         break;
+      case 5:
+         Equipe();
          break;
       default:
-         cout << "\t\topcao inválida";
+         cout << "\t\topcao inválida";                ///
          pausa;
       }
    }while(true); /// coloque sempre verdade no do-while, pois ja  tenho uma verificaçao interna com switch com exit(true);
@@ -114,14 +119,14 @@ int pularElementosParaDireita(int lista[]){ //ok
    for(int i=0; i<5; i++){
    		if(lista[0] != 0){
       		if(lista[i] == 0){
-        		aux = lista[i-1];
-				lista[i-1] = lista[i];
-				lista[i] = aux;
-				i=0;
-			}
-   		}else{
-   			break;
-		   }
+               aux = lista[i-1];
+               lista[i-1] = lista[i];
+               lista[i] = aux;
+               i=0;
+            }
+         }else{
+            break;
+         }
 	}
 }
 
@@ -156,7 +161,7 @@ void inserir(int indice, int elemento, int lista[]){ //
          if(lista[0] == 0){                           /// verifica se lista[0] da lista está vazio
             lista[0] = elemento;                      /// entao lista[0] = elemento
          }else{                                       /// se nao
-            pularElementosParaDireita(lista);                    /// pula todo elemento um casa a direita
+            pularElementosParaDireita(lista);         /// pula todo elemento um casa a direita
             lista[0] = elemento;                      /// coloque lista[0] = elemento
          }
       }
@@ -174,14 +179,22 @@ void excluir(int elemento, int lista[]){ //
 /// Funcões Secundárias
 void pesquisar(int lista[]){ //ok
    int elemento;
-   cls;
-   cout << "\n\n\tValor:";
-   cin >> elemento;
+   do{
+      cls;
+      cout << "\t\tProcura\n" <<
+              "\telemento: ";
+      cin >> elemento;
+      if(elemento == 0){
+         cout << "\telemento inválida tente novamente";
+         pausa;
+      }
+   }while(elemento == 0);
+
    if (procurar(elemento,lista) != -1){
       cout << "\tvalor " << elemento << " encontrado !\n";
       cout << "\tPosicão: " << procurar(elemento,lista)+1 << "º";
    }else{
-      cout << "valor " << elemento << " não emcontrado!";
+      cout << "\tvalor " << elemento << " não emcontrado!";
    }
    pausa;
 }
@@ -191,16 +204,19 @@ void adicionar(int lista[]){
       cls;
       cout << "\tvalor do elemento:";
       cin >> elemento;
-      /*cout << "\tEm qual posicão: ";
-      cin >> indice;*/
+
       do{
-            cout << "\t\tinserir:\n" <<
-                    "\t1. No inicio\n" <<
-                    "\t2. *No meio*\n" <<
-                    "\t3. *No final*\n" <<
-                    "\topcao:";
+            cls;
+            cout << "\tinserir elemento: "<< elemento << "\n" <<
+                    "\t1. No inicio da lista\n" <<
+                    "\t2. *No meio da lista*\n" <<
+                    "\t3. *No final da lista*\n" <<
+                    "\t0. Cancelar Operação\n" <<
+                    "\tOperação:";
             cin >> opcao;
       switch(opcao){
+      case 0:
+            break;
       case 1:
             inserir(0,elemento,lista);
          break;
@@ -215,8 +231,22 @@ void adicionar(int lista[]){
          pausa;
       }
 
-      }while(opcao < 1 || opcao > 3);
+      }while(opcao < 0 || opcao > 3);
 
+}
+
+
+
+
+void Equipe(){
+   cls;
+   cout << "\t\t\t Equipe Cyber Bullets\n\n" <<
+         "\tnome:....... Saulo Campos\n" <<
+         "\tnome:....... G \n" <<
+         "\tnome:....... A \n" <<
+         "\tnome:....... J \n" <<
+   endl;
+   pausa;
 }
 
 /********* TAD *************
