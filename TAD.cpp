@@ -14,13 +14,16 @@ int test = 0;
 bool isCheio(int listra[]);
 bool isVazia(int lista[]);
 int quantidadeOcupado(int lista[]);
-int MoveProximo(int indiceAntecessor,int lista[]);
+int pularElementosParaDireita(int lista[]);
 void mostrar(int lista[]);
 int procurar(int elemento, int lista[]);
+void pesquisar(int lista[]);
+
+/// prototipos em desenvolvimento
 void inserir(int indice, int elemento, int listra[]);
 void excluir(int elemento, int lista[]);
 
-void pesquisar(int lista[]);
+
 void adicionar(int lista[]);
 
 
@@ -46,7 +49,7 @@ int main(){
       cls;
       cout << "\t\tTAD\t\t"<< quantidadeOcupado(lista) << "/"<<TAMANHO<<"\n" <<
               "\t1. Mostrar lista\n" <<
-              "\t2. *Inserir elemento*\n" <<
+              "\t2. Inserir elemento\n" <<
               "\t3. *Remover elemento*\n" <<
               "\t4. procura elemento\n" <<
               "\t0. sair\n" <<
@@ -106,20 +109,20 @@ int quantidadeOcupado(int lista[]){ //ok otimizado
    return contador;
 }
 
-int moveProximo(int indiceAntecessor,int lista[]){
-   int indiceSucessor = indiceAntecessor+1;
-   int elementoAntecessor;
-   if(lista[indiceSucessor] == 0){
-      cout << "sucesso = zero  sucesso pega valor antecesor  : indece A: " << indiceAntecessor <<" S: "<< indiceSucessor << endl;
-      cout << "sucesso = zero  sucesso pega valor antecesor  : valor A: " << lista[indiceAntecessor] <<" S: "<< lista[indiceSucessor] << endl;
-      lista[indiceSucessor] = lista[indiceAntecessor];
-      cout << "atualizado: indece A: " << indiceAntecessor << " S: " << indiceSucessor << endl;
-      cout << "atualizado: valor A: " << lista[indiceAntecessor] << " S: " << lista[indiceSucessor] << endl;
-      cout << test++;
-      pausa;
-   }else
-      moveProximo(indiceSucessor,lista);
-      lista[indiceAntecessor] = 0;
+int pularElementosParaDireita(int lista[]){ //ok
+   int aux;
+   for(int i=0; i<5; i++){
+   		if(lista[0] != 0){
+      		if(lista[i] == 0){
+        		aux = lista[i-1];
+				lista[i-1] = lista[i];
+				lista[i] = aux;
+				i=0;
+			}
+   		}else{
+   			break;
+		   }
+	}
 }
 
 
@@ -145,16 +148,16 @@ int procurar(int elemento, int lista[]){ //ok
 //!                 em desenvolvimento                        !//
 void inserir(int indice, int elemento, int lista[]){ //
    int proximoValor,AnteriorValor,antigoValor,aux;
-   if(isCheio(lista)){
-      cout << "lista cheia!";
-      pausa;
-   }else{
-      if(indice == 0){                                /// se for no inicio da lista
-         if(lista[0] == 0){                           /// verifica se primeiro indice está vazio
-            lista[0] = elemento;                      /// se estive coloque o valor no inicio
-         }else{                                       /// se nao tive
-            moveProximo(0,lista);
-            lista[0] = elemento;
+   if(isCheio(lista)){                                /// verifica se a lista esta cheia
+      cout << "lista cheia!";                         /// entao mostra messagem e aborta a inserção
+      pausa;                                          /// pausa para ver a messagem
+   }else{                                             /// se nao
+      if(indice == 0){                                /// se o indice for zero é para coloca o elemento no inicio lista
+         if(lista[0] == 0){                           /// verifica se lista[0] da lista está vazio
+            lista[0] = elemento;                      /// entao lista[0] = elemento
+         }else{                                       /// se nao
+            pularElementosParaDireita(lista);                    /// pula todo elemento um casa a direita
+            lista[0] = elemento;                      /// coloque lista[0] = elemento
          }
       }
 
@@ -193,8 +196,8 @@ void adicionar(int lista[]){
       do{
             cout << "\t\tinserir:\n" <<
                     "\t1. No inicio\n" <<
-                    "\t2. No meio\n" <<
-                    "\t3. No final\n" <<
+                    "\t2. *No meio*\n" <<
+                    "\t3. *No final*\n" <<
                     "\topcao:";
             cin >> opcao;
       switch(opcao){
