@@ -14,7 +14,7 @@ int test = 0;
 bool isCheio(int listra[]);                           /// verifica se a lista está cheia
 bool isVazia(int lista[]);                            /// verifica se a lista está vazia
 int quantidadeOcupado(int lista[]);                   /// verifica a quantidades de elementos que estao ocupados
-void troca(int &a,int &b);
+void troca(int &a,int &b);                            /// troca valores entre duas variaveis
 int pularElementosParaDireita(int lista[]);           /// pula os todos elementos um casa para direita  se proximo elemento for zero
 void mostrar(int lista[]);                            /// mostra toda elementos lista!
 int procurar(int elemento, int lista[]);              /// funcao: procura um elemento específico na lista
@@ -50,11 +50,11 @@ int main(){
    do{
       cls;
       cout << "\t\tTAD\t\t"<< quantidadeOcupado(lista) << "/"<<TAMANHO<<"\n" <<
-              "\t1. Mostrar lista\n" <<
-              "\t2. Inserir elemento\n" <<
-              "\t3. *Remover elemento*\n" <<
-              "\t4. procura elemento\n" <<
-              "\t5. Sobre a Equipe\n" <<
+              "\t1. Inserir elemento\n" <<
+              "\t2. *Remover elemento*\n" <<
+              "\t3. procurar elemento\n" <<
+              "\t4. Mostrar lista\n" <<
+              "\t5. Ordenar lista\n" <<
               "\t0. sair\n" <<
               "\tOpcao: ";
       cin >> opcao;
@@ -63,16 +63,16 @@ int main(){
          Equipe();
          exit(true);                                  /// fecha o programa
       case 1:
-         mostrar(lista);                              ///
+          adicionar(lista);                            ///
          break;
       case 2:
-         adicionar(lista);                            ///
+         //remove
          break;
       case 3:
-         //excluir();                                 ///
+         pesquisar(lista);                            ///
          break;
       case 4:
-         pesquisar(lista);                            ///
+         mostrar(lista);                              ///
          break;
       case 5:
          Equipe();
@@ -89,15 +89,15 @@ int main(){
 
 /// Funcões Primárias
 bool isCheio(int lista[]){ //ok
-  for(int i =0; i<TAMANHO; i++){
-    if(lista[i] == 0){
-      return false;
+   for(int i =0; i<TAMANHO; i++){
+      if(lista[i] == 0){
+         return false;
 		}
 	}
-  return true;
+   return true;
 }
 
-bool isVazia(int lista[]){ //ok otimizado
+bool isVazia(int lista[]){ //ok
    for(int i =0; i<TAMANHO; i++){
       if(lista[i] != 0){
          return false;
@@ -106,7 +106,7 @@ bool isVazia(int lista[]){ //ok otimizado
    return true;
 }
 
-int quantidadeOcupado(int lista[]){ //ok otimizado
+int quantidadeOcupado(int lista[]){ //ok
    int contador = 0;
    for(int i=0; i<TAMANHO; i++){
       if(lista[i] != 0){
@@ -118,10 +118,10 @@ int quantidadeOcupado(int lista[]){ //ok otimizado
 
 
 
-void troca(int &a, int &b){
-   int aux = a;
-   a = b;
-   b = aux;
+void troca(int &a, int &b){         /// ! passagem por enderenço ! usa-se & no mone da variavel para dizer que vamos passa o endereço dele
+   int aux = a;                     /// antes de modifica  fiz backup do  valor do A
+   a = b;                           /// A pega valor de B
+   b = aux;                         /// B pega valor do A que tava salvo na aux
 }
 
 int pularElementosParaDireita(int lista[]){ //ok
@@ -131,12 +131,7 @@ int pularElementosParaDireita(int lista[]){ //ok
          break;                                       /// se for verdade para o for
       }else{                                          /// se nao entao
          if(lista[i] == 0){                           /// verifica lista[i] igual a zero
-            /*aux = lista[i-1];                         /// se for verdade elemento i troca elemento
-            lista[i-1] = lista[i];
-            lista[i] = aux;*/
-
             troca(lista[i],lista[i-1]);
-
             i=0;
          }
       }
