@@ -23,8 +23,8 @@ void pesquisar(int lista[]);                          /// interface: procura um 
 
 /// prototipos em desenvolvimento
 void inserir(int indice, int elemento, int listra[]); /// funcao: inserir elemento específico na lista
-void excluir(int elemento, int lista[]);              /// funçao: excluir elemento especifico na lista
-void atualizaElemento(int elemento, int lista[]);             /// funçao: atualiza elemento especifico na lista
+bool excluir(int elemento, int lista[]);              /// funçao: excluir elemento especifico na lista
+void atualizaElemento(int elemento, int lista[]);     /// funçao: atualiza elemento especifico na lista
 void adicionar(int lista[]);                          /// interface: inserir na lista que usuario digitou
 void remover(int lista[]);                            /// interface: remover na lista que usuario digitou
 
@@ -41,24 +41,25 @@ int main(){
    int opcao;
    setlocale(LC_ALL,"portuguese");
    system("color 2"); // setar cor de o texto e fundo
-   /** zona de teste ** zona de teste ** zona de teste ****
+   system("title TAD::LISTA");
+   /** zona de teste ** zona de teste ** zona de teste ****/
    //for(int i=0; i<TAMANHO; i++){lista[i] = 1;}
    lista[0] = 1000;
    lista[1] = 11;
    lista[2] = 22;
    lista[3] = 33;
-   lista[4] = 44;
+   lista[10] = 44;
    lista[5] = 55;
    lista[6] = 66;
    lista[7] = 77;
-   lista[8] = 88;
-   lista[9] = 99;
+   lista[18] = 88;
+   lista[19] = 99;
    /** zona de teste ** zona de teste ** zona de teste ***/
    do{
       cls;
-      cout << "\t\tTAD\t\t"<< quantidadeOcupado(lista) << "/"<<TAMANHO<<"\n" <<
+      cout << "\t\tTAD\t\t" << quantidadeOcupado(lista) << "/" << TAMANHO << "\n" <<
               "\t1. Inserir elemento\n" <<
-              "\t2. *Remover elemento*\n" <<
+              "\t2. Remover elemento\n" <<
               "\t3. procurar elemento\n" <<
               "\t4. Mostrar lista\n" <<
               "\t5. *Ordenar lista*\n" <<
@@ -73,7 +74,7 @@ int main(){
           adicionar(lista);                           /// abre a interface de inserir elementos
          break;
       case 2:
-         //remove                                        /// abre interface de remove elementos
+         remover(lista);                                        /// abre interface de remove elementos
          break;
       case 3:
          pesquisar(lista);                            /// abre interface de busca de elementos na lista
@@ -182,6 +183,17 @@ int procurar(int elemento, int lista[]){ //ok
 }
 
 
+bool excluir(int elemento, int lista[]){
+	for(int i=0; i<TAMANHO; i++){
+		if(elemento == lista[i]){
+			lista[i] = 0;
+			return true;
+		}
+	}
+	return false;
+}
+
+
 
 void inserir(int indice, int elemento, int lista[]){ //
    int proximoValor,AnteriorValor,antigoValor,aux;
@@ -246,7 +258,7 @@ void atualizaElemento(int elemento, int lista[]){ //
    cls;
    cout << "\tPosição\tElementos \n\n";
    for(int i=0; i<TAMANHO; i++){
-      cout << "\t" << i+1 << "º\t" <<  lista[i] << endl;
+        (lista[i] != 0)? cout << "\t" << i+1 << "º\t" << lista[i] << "\n" : cout << "" ;
 	}
    cout << "\tQual elemento quer atualiza por "<< elemento << "\t0. para cancelar"
    << "?\n\telemento:";
@@ -312,7 +324,7 @@ void adicionar(int lista[]){
                     "\t1. No inicio da lista\n" <<
                     "\t2. No meio da lista\n" <<
                     "\t3. No final da lista\n" <<
-                    "\t4. Atualizar elemento"<<
+                    "\t4. Atualizar elemento\n"<<
                     "\t0. Cancelar Operação\n" <<
                     "\tOperação:";
             cin >> opcao;
@@ -344,30 +356,40 @@ void adicionar(int lista[]){
 
 
 /**!                 em desenvolvimento                        !**/
-void excluir(int elemento, int lista[]){ //
 
-}
 
 void remover(int lista[]){
-   int elemento,opcao;
+   int elemento;
+   do{
       cls;
-      cout << "\t\tRemover elemento da lista\n";
-      cout << "\telemento :";
-      cin >> elemento;
+      cout << "\tPosição\tElementos \n\n";
+      for(int i=0; i<TAMANHO; i++){
+         (lista[i] != 0)? cout << "\t" << i+1 << "º\t" << lista[i] << "\n" : cout << "" ;
+      }
+      cout<<"\n\tQual elemento quer excluir?\n\tElemento: ";
+      cin>>elemento;
+      if(elemento == 0){
+         cout << "\telemento inválida tente outra vez";
+         pausa;
+      }
 
+	}while(elemento == 0);
+   if(excluir(elemento, lista))
+      cout << "\tElemento apagado com sucesso\n";
+   else
+      cout << "\tElemento não está lista\n";
 
-
-
+	pausa;
 }
 
 
 void Equipe(){
    cls;
    cout << "\t\t\t Equipe Cyber Bullets\n\n" <<
-         "\tnome:............. Saulo Campos(Puppet0x40)\n" <<
-         "\tnome:............. G           (GUI)\n" <<
-         "\tnome:............. A           (Mogli)\n" <<
-         "\tnome:............. J           (???)\n" <<
+         "\tNome:............. Saulo Campos Campos        (Puppet0x40)\n" <<
+         "\tNome:............. Guilherme dos Santos Rocha (Cuphead)\n" <<
+         "\tNome:............. Anderson Lucas Duarte      (Jamelão)\n" <<
+         "\tNome:............. João Gabriel Sabino        (Odin)\n" <<
          "\tprofessor:........ Raiol\n " <<
    endl;
    pausa;
@@ -379,9 +401,9 @@ void Equipe(){
 *@quantidadeDePontos = 2.0
 *@dataDeEntrega = 25/04/19
 *@Equipe: Cyber Bullets
-*@Aluno = Saulo Campos
-*@aluno =
-*@aluno =
-*@aluno =
+*@Aluno = Saulo Campos Castro
+*@aluno = João Gabriel Sabino
+*@aluno = Guilherme dos Santos Rocha
+*@aluno = Anderson Lucas Duarte
 ***************************/
 
