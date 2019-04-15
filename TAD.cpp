@@ -5,7 +5,7 @@
 ///
 #define cls system("cls");          /// limpa (cmd) Prompt de Comando
 #define pausa getchar();getchar()   /// pausa Prompt de Comando
-const int TAMANHO = 10;             /// fixar o TAMANHO do vetor e da condicional do for
+const int TAMANHO = 20;             /// fixar o TAMANHO do vetor e da condicional do for
 using namespace std;
 
 int test = 0;
@@ -24,6 +24,7 @@ void pesquisar(int lista[]);                          /// interface: procura um 
 /// prototipos em desenvolvimento
 void inserir(int indice, int elemento, int listra[]); /// funcao: inserir elemento específico na lista
 void excluir(int elemento, int lista[]);              /// funçao: excluir elemento especifico na lista
+void atualizaElemento(int elemento, int lista[]);             /// funçao: atualiza elemento especifico na lista
 void adicionar(int lista[]);                          /// interface: inserir na lista que usuario digitou
 void remover(int lista[]);                            /// interface: remover na lista que usuario digitou
 
@@ -40,7 +41,7 @@ int main(){
    int opcao;
    setlocale(LC_ALL,"portuguese");
    system("color 2"); // setar cor de o texto e fundo
-   /** zona de teste ** zona de teste ** zona de teste ****/
+   /** zona de teste ** zona de teste ** zona de teste ****
    //for(int i=0; i<TAMANHO; i++){lista[i] = 1;}
    lista[0] = 1000;
    lista[1] = 11;
@@ -60,7 +61,7 @@ int main(){
               "\t2. *Remover elemento*\n" <<
               "\t3. procurar elemento\n" <<
               "\t4. Mostrar lista\n" <<
-              "\t5. Ordenar lista\n" <<
+              "\t5. *Ordenar lista*\n" <<
               "\t0. sair\n" <<
               "\tOpcao: ";
       cin >> opcao;
@@ -170,6 +171,7 @@ void mostrar(int lista[]){ //ok
 	pausa;
 }
 
+
 int procurar(int elemento, int lista[]){ //ok
    for(int i=0; i<TAMANHO; i++){
       if(lista[i] == elemento){
@@ -179,11 +181,12 @@ int procurar(int elemento, int lista[]){ //ok
    return -1;
 }
 
-/**!                 em desenvolvimento                        !**/
+
+
 void inserir(int indice, int elemento, int lista[]){ //
    int proximoValor,AnteriorValor,antigoValor,aux;
    if(isCheio(lista)){                                /// verifica se a lista esta cheia
-      cout << "\tlista cheia!";                         /// entao mostra messagem e aborta a inserção
+      cout << "\t\tLista Cheia!";                         /// entao mostra messagem e aborta a inserção
       pausa;                                          /// pausa para ver a messagem
    }else{                                             /// se nao
       if(indice == 0){                    /// se o indice for zero é para coloca o elemento no inicio lista
@@ -192,6 +195,7 @@ void inserir(int indice, int elemento, int lista[]){ //
          }else{                                       /// se nao
             pularElementosParaDireita(lista);         /// pula todo elemento um casa a direita
             lista[0] = elemento;                      /// coloque lista[0] = elemento
+            cout << "\t elemento inserido com sucesso!";
          }
       }else if(indice == TAMANHO-1){      /// se o indice for TAMANHO-1 é para coloca no final da lista
          if(lista[TAMANHO-1] == 0){
@@ -199,6 +203,7 @@ void inserir(int indice, int elemento, int lista[]){ //
          }else{
             pularElementosParaEsquerda(lista);
             lista[TAMANHO-1] = elemento;
+            cout << "\t elemento inserido com sucesso!";
          }
 
       }else if(indice == TAMANHO/2 ){     /// se o indice for  TAMANHO/2 é para coloca no meio da lista
@@ -228,13 +233,44 @@ void inserir(int indice, int elemento, int lista[]){ //
             }
 
             lista[TAMANHO/2] = elemento;                      /// coloque lista[0] = elemento
+            cout << "\t elemento inserido com sucesso!";
          }
 
       }
    }
 }
 
-void excluir(int elemento, int lista[]){ //
+void atualizaElemento(int elemento, int lista[]){ //
+   int posicao, antigo,busca;
+   do{
+   cls;
+   cout << "\tPosição\tElementos \n\n";
+   for(int i=0; i<TAMANHO; i++){
+      cout << "\t" << i+1 << "º\t" <<  lista[i] << endl;
+	}
+   cout << "\tQual elemento quer atualiza por "<< elemento << "\t0. para cancelar"
+   << "?\n\telemento:";
+   cin >> busca;
+   if(busca == 0){
+      cout << "Operaçao Cancelada";
+      pausa;
+      break;
+   }
+   posicao = procurar(busca,lista);
+   if(posicao != -1){
+      antigo = lista[posicao];
+      lista[posicao] = elemento;
+      cout << "\tElemento "<< antigo <<" na "<< posicao+1 <<"º posição "<< endl <<
+              "\tElemento foi atualizado para : " << elemento << endl <<
+              "\t\tOperaçao feita com sucesso!";
+      pausa;
+   }else{
+
+   cout << "\telemento nao encotrado tente novamente";
+   pausa;
+   }
+   }while(posicao == -1);
+
 
 }
 
@@ -274,33 +310,43 @@ void adicionar(int lista[]){
             cls;
             cout << "\tinserir elemento: "<< elemento << "\n" <<
                     "\t1. No inicio da lista\n" <<
-                    "\t2. *No meio da lista*\n" <<
+                    "\t2. No meio da lista\n" <<
                     "\t3. No final da lista\n" <<
+                    "\t4. Atualizar elemento"<<
                     "\t0. Cancelar Operação\n" <<
                     "\tOperação:";
             cin >> opcao;
       switch(opcao){
       case 0:
-            break;
+         break;
       case 1:
-            inserir(0,elemento,lista);
+         inserir(0,elemento,lista);
          break;
       case 2:
-            inserir(TAMANHO/2,elemento,lista);
+         inserir(TAMANHO/2,elemento,lista);
          break;
       case 3:
-            inserir(TAMANHO-1,elemento,lista);
+         inserir(TAMANHO-1,elemento,lista);
+         break;
+      case 4:
+         atualizaElemento(elemento,lista);
          break;
       default:
          cout << "opcao inválida";
          pausa;
       }
 
-      }while(opcao < 0 || opcao > 3);
+      }while(opcao < 0 || opcao > 4);
 
 }
 
 
+
+
+/**!                 em desenvolvimento                        !**/
+void excluir(int elemento, int lista[]){ //
+
+}
 
 void remover(int lista[]){
    int elemento,opcao;
@@ -315,8 +361,6 @@ void remover(int lista[]){
 }
 
 
-
-
 void Equipe(){
    cls;
    cout << "\t\t\t Equipe Cyber Bullets\n\n" <<
@@ -328,6 +372,8 @@ void Equipe(){
    endl;
    pausa;
 }
+
+
 
 /********* TAD *************
 *@quantidadeDePontos = 2.0
