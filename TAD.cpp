@@ -14,18 +14,21 @@ int test = 0;
 bool isCheio(int listra[]);                           /// verifica se a lista está cheia
 bool isVazia(int lista[]);                            /// verifica se a lista está vazia
 int quantidadeOcupado(int lista[]);                   /// verifica a quantidades de elementos que estao ocupados
-void troca(int &a,int &b);
-int pularElementosParaDireita(int lista[]);           /// pula os todos elementos um casa para direita  se proximo elemento for zero
+void troca(int &a,int &b);                            /// troca valores entre duas variaveis
+int pularElementosParaDireita(int lista[]);           /// pula os todos elementos um casa para direita se proximo elemento for zero
+int pularElementosParaEsquerda(int lista[]);           /// pula os todos elementos um casa para esquerda se anterior elemento for zero
 void mostrar(int lista[]);                            /// mostra toda elementos lista!
 int procurar(int elemento, int lista[]);              /// funcao: procura um elemento específico na lista
 void pesquisar(int lista[]);                          /// interface: procura um elemento específico na lista que usuario digitou
 
 /// prototipos em desenvolvimento
 void inserir(int indice, int elemento, int listra[]); /// funcao: inserir elemento específico na lista
-void excluir(int elemento, int lista[]);              ///
-void adicionar(int lista[]);                          /// interface: inserir elemento específico na lista que usuario digitou
+void excluir(int elemento, int lista[]);              /// funçao: excluir elemento especifico na lista
+void atualizaElemento(int elemento, int lista[]);             /// funçao: atualiza elemento especifico na lista
+void adicionar(int lista[]);                          /// interface: inserir na lista que usuario digitou
+void remover(int lista[]);                            /// interface: remover na lista que usuario digitou
 
-///besteira
+///Extra
 void Equipe();
 
 
@@ -38,44 +41,48 @@ int main(){
    int opcao;
    setlocale(LC_ALL,"portuguese");
    system("color 2"); // setar cor de o texto e fundo
-   /** zona de teste ** zona de teste ** zona de teste ****/
+   /** zona de teste ** zona de teste ** zona de teste ****
    //for(int i=0; i<TAMANHO; i++){lista[i] = 1;}
-   lista[5] = 1;
-   lista[8] = 2;
-   lista[19] = 3;
-   lista[0] = 4;
-   lista[13] = 5;
-   lista[15] = 6;
+   lista[0] = 1000;
+   lista[1] = 11;
+   lista[2] = 22;
+   lista[3] = 33;
+   lista[4] = 44;
+   lista[5] = 55;
+   lista[6] = 66;
+   lista[7] = 77;
+   lista[8] = 88;
+   lista[9] = 99;
    /** zona de teste ** zona de teste ** zona de teste ***/
    do{
       cls;
       cout << "\t\tTAD\t\t"<< quantidadeOcupado(lista) << "/"<<TAMANHO<<"\n" <<
-              "\t1. Mostrar lista\n" <<
-              "\t2. Inserir elemento\n" <<
-              "\t3. *Remover elemento*\n" <<
-              "\t4. procura elemento\n" <<
-              "\t5. Sobre a Equipe\n" <<
+              "\t1. Inserir elemento\n" <<
+              "\t2. *Remover elemento*\n" <<
+              "\t3. procurar elemento\n" <<
+              "\t4. Mostrar lista\n" <<
+              "\t5. *Ordenar lista*\n" <<
               "\t0. sair\n" <<
               "\tOpcao: ";
       cin >> opcao;
       switch(opcao){
       case 0:
-         Equipe();
+         Equipe();                                    /// mostra nome da equipe e dos integrante
          exit(true);                                  /// fecha o programa
       case 1:
-         mostrar(lista);                              ///
+          adicionar(lista);                           /// abre a interface de inserir elementos
          break;
       case 2:
-         adicionar(lista);                            ///
+         //remove                                        /// abre interface de remove elementos
          break;
       case 3:
-         //excluir();                                 ///
+         pesquisar(lista);                            /// abre interface de busca de elementos na lista
          break;
       case 4:
-         pesquisar(lista);                            ///
+         mostrar(lista);                              /// mostra toda lista
          break;
       case 5:
-         Equipe();
+         Equipe();                                    /// extra
          break;
       default:
          cout << "\t\topcao inválida";                ///
@@ -89,15 +96,16 @@ int main(){
 
 /// Funcões Primárias
 bool isCheio(int lista[]){ //ok
-  for(int i =0; i<TAMANHO; i++){
-    if(lista[i] == 0){
-      return false;
+   for(int i =0; i<TAMANHO; i++){
+      if(lista[i] == 0){
+         return false;
 		}
 	}
-  return true;
+   return true;
 }
 
-bool isVazia(int lista[]){ //ok otimizado
+
+bool isVazia(int lista[]){ //ok
    for(int i =0; i<TAMANHO; i++){
       if(lista[i] != 0){
          return false;
@@ -106,7 +114,8 @@ bool isVazia(int lista[]){ //ok otimizado
    return true;
 }
 
-int quantidadeOcupado(int lista[]){ //ok otimizado
+
+int quantidadeOcupado(int lista[]){ //ok
    int contador = 0;
    for(int i=0; i<TAMANHO; i++){
       if(lista[i] != 0){
@@ -117,11 +126,10 @@ int quantidadeOcupado(int lista[]){ //ok otimizado
 }
 
 
-
-void troca(int &a, int &b){
-   int aux = a;                         /// se for verdade elemento i troca elemento
-   a = b;
-   b = aux;
+void troca(int &a, int &b){               /// ! passagem por enderenço ! usa-se & no mone da variavel para dizer que vamos passa o endereço dele
+   int aux = a;                           /// antes de modifica  fiz backup do  valor do A
+   a = b;                                 /// A pega valor de B
+   b = aux;                               /// B pega valor do A que tava salvo na aux
 }
 
 int pularElementosParaDireita(int lista[]){ //ok
@@ -131,13 +139,22 @@ int pularElementosParaDireita(int lista[]){ //ok
          break;                                       /// se for verdade para o for
       }else{                                          /// se nao entao
          if(lista[i] == 0){                           /// verifica lista[i] igual a zero
-            /*aux = lista[i-1];                         /// se for verdade elemento i troca elemento
-            lista[i-1] = lista[i];
-            lista[i] = aux;*/
+            troca(lista[i],lista[i-1]);               /// troca entre anterior com atual
+            i=0;                                      /// reinicia a varredura
+         }
+      }
+	}
+}
 
-            troca(lista[i],lista[i-1]);
-
-            i=0;
+int pularElementosParaEsquerda(int lista[]){ //ok
+   //int aux;
+   for(int i=TAMANHO-1; i>0; i--){                    /// varredura para 0 a TAMANHO-1
+      if(lista[TAMANHO-1] == 0){                      /// verifica se se primeiro igual a 0
+         break;                                       /// se for verdade para o for
+      }else{                                          /// se nao entao
+         if(lista[i] == 0){                           /// verifica lista[i] igual a zero
+            troca(lista[i],lista[i+1]);               /// troca entre anterior com atual
+            i=TAMANHO-1;                              /// reinicia a varredura
          }
       }
 	}
@@ -154,6 +171,7 @@ void mostrar(int lista[]){ //ok
 	pausa;
 }
 
+
 int procurar(int elemento, int lista[]){ //ok
    for(int i=0; i<TAMANHO; i++){
       if(lista[i] == elemento){
@@ -163,34 +181,102 @@ int procurar(int elemento, int lista[]){ //ok
    return -1;
 }
 
-//!                 em desenvolvimento                        !//
+
+
 void inserir(int indice, int elemento, int lista[]){ //
    int proximoValor,AnteriorValor,antigoValor,aux;
    if(isCheio(lista)){                                /// verifica se a lista esta cheia
-      cout << "lista cheia!";                         /// entao mostra messagem e aborta a inserção
+      cout << "\t\tLista Cheia!";                         /// entao mostra messagem e aborta a inserção
       pausa;                                          /// pausa para ver a messagem
    }else{                                             /// se nao
-      if(indice == 0){                                /// se o indice for zero é para coloca o elemento no inicio lista
+      if(indice == 0){                    /// se o indice for zero é para coloca o elemento no inicio lista
          if(lista[0] == 0){                           /// verifica se lista[0] da lista está vazio
             lista[0] = elemento;                      /// entao lista[0] = elemento
-         }
-         else{                                       /// se nao
+         }else{                                       /// se nao
             pularElementosParaDireita(lista);         /// pula todo elemento um casa a direita
             lista[0] = elemento;                      /// coloque lista[0] = elemento
+            cout << "\t elemento inserido com sucesso!";
          }
+      }else if(indice == TAMANHO-1){      /// se o indice for TAMANHO-1 é para coloca no final da lista
+         if(lista[TAMANHO-1] == 0){
+            lista[TAMANHO-1] = elemento;
+         }else{
+            pularElementosParaEsquerda(lista);
+            lista[TAMANHO-1] = elemento;
+            cout << "\t elemento inserido com sucesso!";
+         }
+
+      }else if(indice == TAMANHO/2 ){     /// se o indice for  TAMANHO/2 é para coloca no meio da lista
+         if(lista[TAMANHO/2] == 0){                         /// verifica se lista[TAMANHO/2] da lista está vazio
+            lista[TAMANHO/2] = elemento;                    /// entao lista[TAMANHO/2] = elemento
+         }else{                                             /// se nao
+            for(int i=TAMANHO/2; i<TAMANHO; i++){           /// varredura do TAMANHO/2  para final
+               if(lista[TAMANHO/2] == 0){                   /// verifica se se primeiro igual a 0
+                  break;                                    /// se for verdade saia do for
+               }else{                                       /// se nao entao
+                  if(lista[i] == 0){                        /// verifica lista[i] igual a zero
+                  troca(lista[i],lista[i-1]);               /// troca entre anterior com atual
+                  i=TAMANHO/2;                              /// reinicia a varredura
+                  }
+               }
+            }
+
+            for(int i=(TAMANHO/2); i>0; i--){         /// varredura do TAMANHO/2  para inicio
+               if(lista[(TAMANHO/2)] == 0){                   /// verifica se se TAMANHO/2 igual a 0
+                  break;                                    /// se for verdade para o for
+               }else{                                       /// se nao entao
+                  if(lista[i] == 0){                        /// verifica lista[i] igual a zero
+                     troca(lista[i],lista[i+1]);            /// troca entre anterior com atual
+                     i=(TAMANHO/2);                           /// reinicia a varredura
+                  }
+               }
+            }
+
+            lista[TAMANHO/2] = elemento;                      /// coloque lista[0] = elemento
+            cout << "\t elemento inserido com sucesso!";
+         }
+
       }
-
    }
+}
+
+void atualizaElemento(int elemento, int lista[]){ //
+   int posicao, antigo,busca;
+   do{
+   cls;
+   cout << "\tPosição\tElementos \n\n";
+   for(int i=0; i<TAMANHO; i++){
+      cout << "\t" << i+1 << "º\t" <<  lista[i] << endl;
+	}
+   cout << "\tQual elemento quer atualiza por "<< elemento << "\t0. para cancelar"
+   << "?\n\telemento:";
+   cin >> busca;
+   if(busca == 0){
+      cout << "Operaçao Cancelada";
+      pausa;
+      break;
+   }
+   posicao = procurar(busca,lista);
+   if(posicao != -1){
+      antigo = lista[posicao];
+      lista[posicao] = elemento;
+      cout << "\tElemento "<< antigo <<" na "<< posicao+1 <<"º posição "<< endl <<
+              "\tElemento foi atualizado para : " << elemento << endl <<
+              "\t\tOperaçao feita com sucesso!";
+      pausa;
+   }else{
+
+   cout << "\telemento nao encotrado tente novamente";
+   pausa;
+   }
+   }while(posicao == -1);
+
 
 }
 
-void excluir(int elemento, int lista[]){ //
-
-}
 
 
-
-/// Funcões Secundárias
+/// Funcões Secundárias(interfaces);
 void pesquisar(int lista[]){ //ok
    int elemento;
    do{
@@ -216,40 +302,63 @@ void pesquisar(int lista[]){ //ok
 void adicionar(int lista[]){
    int elemento,indice,opcao;
       cls;
-      cout << "\tvalor do elemento:";
+      cout << "\t\t adiciona elemento na lista\n";
+      cout << "\telemento:";
       cin >> elemento;
 
       do{
             cls;
             cout << "\tinserir elemento: "<< elemento << "\n" <<
                     "\t1. No inicio da lista\n" <<
-                    "\t2. *No meio da lista*\n" <<
-                    "\t3. *No final da lista*\n" <<
+                    "\t2. No meio da lista\n" <<
+                    "\t3. No final da lista\n" <<
+                    "\t4. Atualizar elemento"<<
                     "\t0. Cancelar Operação\n" <<
                     "\tOperação:";
             cin >> opcao;
       switch(opcao){
       case 0:
-            break;
+         break;
       case 1:
-            inserir(0,elemento,lista);
+         inserir(0,elemento,lista);
          break;
       case 2:
-            //inserir()
+         inserir(TAMANHO/2,elemento,lista);
          break;
       case 3:
-
+         inserir(TAMANHO-1,elemento,lista);
+         break;
+      case 4:
+         atualizaElemento(elemento,lista);
          break;
       default:
          cout << "opcao inválida";
          pausa;
       }
 
-      }while(opcao < 0 || opcao > 3);
+      }while(opcao < 0 || opcao > 4);
 
 }
 
 
+
+
+/**!                 em desenvolvimento                        !**/
+void excluir(int elemento, int lista[]){ //
+
+}
+
+void remover(int lista[]){
+   int elemento,opcao;
+      cls;
+      cout << "\t\tRemover elemento da lista\n";
+      cout << "\telemento :";
+      cin >> elemento;
+
+
+
+
+}
 
 
 void Equipe(){
@@ -263,6 +372,8 @@ void Equipe(){
    endl;
    pausa;
 }
+
+
 
 /********* TAD *************
 *@quantidadeDePontos = 2.0
