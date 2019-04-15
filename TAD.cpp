@@ -375,7 +375,7 @@ void Equipe(){
 
 
 
-/********* TAD *************
+/********* TAD **************
 *@quantidadeDePontos = 2.0
 *@dataDeEntrega = 25/04/19
 *@Equipe: Cyber Bullets
