@@ -13,7 +13,7 @@ bool isVazia(int lista[]);                            /// verifica se a lista es
 int quantidadeOcupado(int lista[]);                   /// verifica a quantidades de elementos que estao ocupados
 void troca(int &a,int &b);                            /// troca valores entre duas variaveis
 int pularElementosParaDireita(int lista[]);           /// pula os todos elementos um casa para direita se proximo elemento for zero
-int pularElementosParaEsquerda(int lista[]);           /// pula os todos elementos um casa para esquerda se anterior elemento for zero
+int pularElementosParaEsquerda(int lista[]);          /// pula os todos elementos um casa para esquerda se anterior elemento for zero
 void mostrar(int lista[]);                            /// mostra toda elementos lista!
 int procurar(int elemento, int lista[]);              /// funcao: procura um elemento específico na lista
 void pesquisar(int lista[]);                          /// interface: procura um elemento específico na lista que usuario digitou
