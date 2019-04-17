@@ -2,13 +2,10 @@
 #include <cstdlib>
 #include <cstdio>
 #include <clocale>
-///
 #define cls system("cls");          /// limpa (cmd) Prompt de Comando
 #define pausa getchar();getchar()   /// pausa Prompt de Comando
 const int TAMANHO = 20;             /// fixar o TAMANHO do vetor e da condicional do for
 using namespace std;
-
-int test = 0;
 
 /// prototipos
 bool isCheio(int listra[]);                           /// verifica se a lista está cheia
@@ -93,8 +90,6 @@ int main(){
 }
 
 
-
-
 /// Funcões Primárias
 bool isCheio(int lista[]){ //ok
    for(int i =0; i<TAMANHO; i++){
@@ -127,14 +122,13 @@ int quantidadeOcupado(int lista[]){ //ok
 }
 
 
-void troca(int &a, int &b){               /// ! passagem por enderenço ! usa-se & no mone da variavel para dizer que vamos passa o endereço dele
-   int aux = a;                           /// antes de modifica  fiz backup do  valor do A
+void troca(int &a, int &b){               /// ! passagem por enderenço ! usa-se & no mone da variavel para dizer que vamos passa o endereço para ela
+   int aux = a;                           /// antes de modifica faz backup do valor do A
    a = b;                                 /// A pega valor de B
    b = aux;                               /// B pega valor do A que tava salvo na aux
 }
 
 int pularElementosParaDireita(int lista[]){ //ok
-   //int aux;
    for(int i=0; i<TAMANHO; i++){                      /// varredura para 0 a TAMANHO-1
       if(lista[0] == 0){                              /// verifica se se primeiro igual a 0
          break;                                       /// se for verdade para o for
@@ -148,7 +142,6 @@ int pularElementosParaDireita(int lista[]){ //ok
 }
 
 int pularElementosParaEsquerda(int lista[]){ //ok
-   //int aux;
    for(int i=TAMANHO-1; i>0; i--){                    /// varredura para 0 a TAMANHO-1
       if(lista[TAMANHO-1] == 0){                      /// verifica se se primeiro igual a 0
          break;                                       /// se for verdade para o for
@@ -197,25 +190,27 @@ bool excluir(int elemento, int lista[]){
 
 void inserir(int indice, int elemento, int lista[]){ //
    int proximoValor,AnteriorValor,antigoValor,aux;
-   if(isCheio(lista)){                                /// verifica se a lista esta cheia
-      cout << "\t\tLista Cheia!";                         /// entao mostra messagem e aborta a inserção
-      pausa;                                          /// pausa para ver a messagem
-   }else{                                             /// se nao
+   if(isCheio(lista)){                                      /// verifica se a lista esta cheia
+      cout << "\t\tLista Cheia!";                           /// entao mostra messagem e aborta a inserção
+      pausa;                                                /// pausa para ver a messagem
+   }
+   else{                                                   /// se nao
       if(indice == 0){                    /// se o indice for zero é para coloca o elemento no inicio lista
-         if(lista[0] == 0){                           /// verifica se lista[0] da lista está vazio
-            lista[0] = elemento;                      /// entao lista[0] = elemento
-         }else{                                       /// se nao
-            pularElementosParaDireita(lista);         /// pula todo elemento um casa a direita
-            lista[0] = elemento;                      /// coloque lista[0] = elemento
-            cout << "\t elemento inserido com sucesso!";
+         if(lista[0] == 0){                                 /// verifica se lista[0] (INICIO )da lista está vazio
+            lista[0] = elemento;                            /// entao lista[0] = elemento
+         }else{                                             /// se nao
+            pularElementosParaDireita(lista);               /// pula todo elemento um casa a direita
+            lista[0] = elemento;                            /// coloque lista[0] = elemento
+            cout << "\t elemento inserido com sucesso!";    /// mensagem da operação
          }
+
       }else if(indice == TAMANHO-1){      /// se o indice for TAMANHO-1 é para coloca no final da lista
-         if(lista[TAMANHO-1] == 0){
-            lista[TAMANHO-1] = elemento;
-         }else{
-            pularElementosParaEsquerda(lista);
-            lista[TAMANHO-1] = elemento;
-            cout << "\t elemento inserido com sucesso!";
+         if(lista[TAMANHO-1] == 0){                         /// verifica se lista[TAMANHA-1] (Final) da lista está vazio
+            lista[TAMANHO-1] = elemento;                    /// entao lista[TAMANHO-1] = elemento
+         }else{                                             /// se nao
+            pularElementosParaEsquerda(lista);              /// pula todo elemento um casa a Esquerda
+            lista[TAMANHO-1] = elemento;                    /// coloque lista[TAMANHO-1] = elemento
+            cout << "\t elemento inserido com sucesso!";    /// mensagem da operação
          }
 
       }else if(indice == TAMANHO/2 ){     /// se o indice for  TAMANHO/2 é para coloca no meio da lista
@@ -233,18 +228,18 @@ void inserir(int indice, int elemento, int lista[]){ //
                }
             }
 
-            for(int i=(TAMANHO/2); i>0; i--){         /// varredura do TAMANHO/2  para inicio
-               if(lista[(TAMANHO/2)] == 0){                   /// verifica se se TAMANHO/2 igual a 0
+            for(int i=(TAMANHO/2); i>0; i--){               /// varredura do TAMANHO/2  para inicio
+               if(lista[(TAMANHO/2)] == 0){                 /// verifica se se TAMANHO/2 igual a 0
                   break;                                    /// se for verdade para o for
                }else{                                       /// se nao entao
                   if(lista[i] == 0){                        /// verifica lista[i] igual a zero
                      troca(lista[i],lista[i+1]);            /// troca entre anterior com atual
-                     i=(TAMANHO/2);                           /// reinicia a varredura
+                     i=(TAMANHO/2);                         /// reinicia a varredura
                   }
                }
             }
 
-            lista[TAMANHO/2] = elemento;                      /// coloque lista[0] = elemento
+            lista[TAMANHO/2] = elemento;                    /// coloque lista[TAMANHO/2] = elemento
             cout << "\t elemento inserido com sucesso!";
          }
 
@@ -374,11 +369,11 @@ void remover(int lista[]){
       }
 
 	}while(elemento == 0);
-   if(excluir(elemento, lista))
+   if(excluir(elemento, lista)){
       cout << "\tElemento apagado com sucesso\n";
-   else
+   }else{
       cout << "\tElemento não está lista\n";
-
+   }
 	pausa;
 }
 
@@ -386,11 +381,11 @@ void remover(int lista[]){
 void Equipe(){
    cls;
    cout << "\t\t\t Equipe Cyber Bullets\n\n" <<
-         "\tNome:............. Saulo Campos Campos        (Puppet0x40)\n" <<
-         "\tNome:............. Guilherme dos Santos Rocha (Cuphead)\n" <<
-         "\tNome:............. Anderson Lucas Duarte      (Jamelão)\n" <<
-         "\tNome:............. João Gabriel Sabino        (Odin)\n" <<
-         "\tprofessor:........ Raiol\n " <<
+         "\tAluno:............. Saulo Campos Campos        (Puppet0x40)\n" <<
+         "\tAluno:............. Guilherme dos Santos Rocha (Cuphead)\n" <<
+         "\tAluno:............. Anderson Lucas Duarte      (Jamelão)\n" <<
+         "\tAluno:............. João Gabriel Sabino        (Odin)\n" <<
+         "\tprofessor:......... Raiol\n " <<
    endl;
    pausa;
 }
