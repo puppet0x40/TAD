@@ -4,7 +4,7 @@
 #include <clocale>
 #define cls system("cls");          /// limpa (cmd) Prompt de Comando
 #define pausa getchar();getchar()   /// pausa Prompt de Comando
-const int TAMANHO = 20;             /// fixar o TAMANHO do vetor e da condicional do for
+const int TAMANHO = 8;             /// fixar o TAMANHO do vetor e da condicional do for
 using namespace std;
 
 /// prototipos
@@ -16,17 +16,13 @@ void deslocamento(int indice, int lista[]);           /// desloca elemento tanto
 void mostrar(int lista[]);                            /// mostra toda elementos lista!
 int procurar(int elemento, int lista[]);              /// funcao: procura um elemento específico na lista
 void pesquisar(int lista[]);                          /// interface: procura um elemento específico na lista que usuario digitou
-
-/// prototipos em desenvolvimento
 void inserir(int indice, int elemento, int listra[]); /// funcao: inserir elemento específico na lista
 bool excluir(int elemento, int lista[]);              /// funçao: excluir elemento especifico na lista
 void atualizaElemento(int elemento, int lista[]);     /// funçao: atualiza elemento especifico na lista
 void adicionar(int lista[]);                          /// interface: inserir na lista que usuario digitou
 void remover(int lista[]);                            /// interface: remover na lista que usuario digitou
-
-///Extra
-void OrdenarElemento(int lista[]);
-void Equipe();
+void OrdenarElemento(int lista[]);                    /// Extra
+void Equipe();                                        /// Extra
 
 /// Variavel Global
 int lista[TAMANHO];
@@ -35,8 +31,8 @@ int lista[TAMANHO];
 int main(){
    int opcao;
    setlocale(LC_ALL,"portuguese");
-   system("mode con:cols=55 lines=40"); // fixa tamanho do cmd com 50 colunas e 40 linhas
-   system("color 2"); // setar cor de o texto e fundo
+   system("mode con:cols=55 lines=40"); // fixa tamanho do cmd com 55 colunas e 40 linhas
+   system("color 2"); // setar cor de o texto e do fundo
    system("title TAD::LISTA versão GOLD"); // setar o titulo do programa
    do{
       cls;
@@ -90,6 +86,7 @@ bool isCheio(int lista[]){ //ok
 }
 
 
+
 bool isVazia(int lista[]){ //ok
    for(int i =0; i<TAMANHO; i++){
       if(lista[i] != 0){
@@ -98,6 +95,7 @@ bool isVazia(int lista[]){ //ok
 	}
    return true;
 }
+
 
 
 int quantidadeOcupado(int lista[]){ //ok
@@ -111,11 +109,13 @@ int quantidadeOcupado(int lista[]){ //ok
 }
 
 
+
 void troca(int &a, int &b){               /// ! passagem por enderenço ! usa-se & no mone da variavel para dizer que vamos passa o endereço dele
    int aux = a;                           /// antes de modifica  fiz backup do  valor do A
    a = b;                                 /// A pega valor de B
    b = aux;                               /// B pega valor do A que tava salvo na aux
 }
+
 
 
 void deslocamento(int indice, int lista[]){
@@ -146,14 +146,21 @@ void deslocamento(int indice, int lista[]){
 }
 
 
+
 void mostrar(int lista[]){ //ok
    cls;
    cout << "\tPosição\tElementos \n\n";
-   for(int i=0; i<TAMANHO; i++){
-      cout << "\t" << i+1 << "º\t" <<  lista[i] << endl;
+   if(isVazia(lista)){
+      cout << "\t\tLista Vazia!";
+      pausa;
+   }else{
+      for(int i=0; i<TAMANHO; i++){
+      cout << "\t" << i+1 << "º\t" << lista[i] << endl ;
 	}
 	pausa;
+   }
 }
+
 
 
 int procurar(int elemento, int lista[]){ //ok
@@ -166,6 +173,7 @@ int procurar(int elemento, int lista[]){ //ok
 }
 
 
+
 bool excluir(int elemento, int lista[]){
 	for(int i=0; i<TAMANHO; i++){
 		if(elemento == lista[i]){
@@ -175,6 +183,7 @@ bool excluir(int elemento, int lista[]){
 	}
 	return false;
 }
+
 
 
 void inserir(int indice, int elemento, int lista[]){ //
@@ -208,6 +217,7 @@ void inserir(int indice, int elemento, int lista[]){ //
       pausa;
    }
 }
+
 
 
 void atualizaElemento(int elemento, int lista[]){ //ok
@@ -244,6 +254,7 @@ void atualizaElemento(int elemento, int lista[]){ //ok
    }while(posicao == -1);
 }
 
+
 /// Funcões Secundárias(interfaces);
 void pesquisar(int lista[]){ //ok
    int elemento;
@@ -265,6 +276,7 @@ void pesquisar(int lista[]){ //ok
    }
    pausa;
 }
+
 
 
 void adicionar(int lista[]){ //ok
@@ -306,52 +318,58 @@ void adicionar(int lista[]){ //ok
 }
 
 
+
 void remover(int lista[]){ //ok
    int elemento,opcao;
-   do{
-      cls;
-      cout <<  "\t\tRemover: \n" <<
-               "\t1. Um elemento\n" <<
-               "\t2. Todos os Elementos\n" <<
-               "\t0. Cancelar Operação\n" <<
-               "\tOperação:";
-      cin >> opcao;
-      switch(opcao){
-      case 0:
-         break;
-      case 1:
+   if(isVazia(lista)){
+      cout << "\t\tLista Vazia!";
+   }else{
+      do{
          cls;
-         cout << "\tPosição\tElementos \n\n";
-         for(int i=0; i<TAMANHO; i++){
-            (lista[i] != 0)? cout << "\t" << i+1 << "º\t" << lista[i] << "\n" : cout << "" ;
-         }
-         do{
-            cout<<"\n\tQual elemento quer excluir?\n\tElemento: ";
-            cin>>elemento;
-            if(elemento == 0){
-               cout << "\telemento inválida tente outra vez";
-               pausa;
+         cout <<  "\t\tRemover: \n" <<
+                  "\t1. Um elemento\n" <<
+                  "\t2. Todos os Elementos\n" <<
+                  "\t0. Cancelar Operação\n" <<
+                  "\tOperação:";
+         cin >> opcao;
+         switch(opcao){
+         case 0:
+            break;
+         case 1:
+            cls;
+            cout << "\tPosição\tElementos \n\n";
+            for(int i=0; i<TAMANHO; i++){
+               (lista[i] != 0)? cout << "\t" << i+1 << "º\t" << lista[i] << "\n" : cout << "" ;
             }
-         }while(elemento == 0);
-         if(excluir(elemento, lista)){
-            cout << "\tElemento apagado com sucesso\n";
-         }else{
-            cout << "\tElemento não está lista\n";
+            do{
+               cout<<"\n\tQual elemento quer excluir?\n\tElemento: ";
+               cin>>elemento;
+               if(elemento == 0){
+                  cout << "\telemento inválida tente outra vez";
+                  pausa;
+               }
+            }while(elemento == 0);
+            if(excluir(elemento, lista)){
+               cout << "\tElemento apagado com sucesso\n";
+            }else{
+               cout << "\tElemento não está lista\n";
+            }
+            break;
+         case 2:
+            for(int i=0; i<TAMANHO; i++){
+               lista[i] = 0;
+            }
+            cout << "\t\tlista limpa!\n";
+            break;
+         default:
+            cout << "\t\tOperação inválida";
+            pausa;
          }
-         break;
-      case 2:
-         for(int i=0; i<TAMANHO; i++){
-            lista[i] = 0;
-         }
-         cout << "\t\tlista limpa!\n";
-         break;
-      default:
-         cout << "\t\tOperação inválida";
-         pausa;
-      }
-   }while(opcao < 0 || opcao > 4);
+      }while(opcao < 0 || opcao > 4);
+   }
 	pausa;
 }
+
 
 /// extra
 void OrdenarElemento(int lista[]){
@@ -365,6 +383,7 @@ void OrdenarElemento(int lista[]){
 }
 
 
+
 void Equipe(){
    cls;
    cout << "\t\t Equipe Cyber Bullets\n\n" <<
@@ -373,10 +392,6 @@ void Equipe(){
          " Aluno:......... Anderson Lucas Duarte     (Jamelão)\n" <<
          " Aluno:......... João Gabriel Sabino       (Odin)\n" <<
          " Professor:..... Raiol \n " <<
-         "\n\nfunções extras:\n" <<
-         " bubble sort.... puppet0x40\n" <<
-         " Menu bônus..... puppet0x40\n" <<
    endl;
    pausa;
 }
-
